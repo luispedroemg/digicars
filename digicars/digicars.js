@@ -38,13 +38,13 @@ class DigiCar{
   }
   
   draw(){
+    p5e.push(); // Save draw state
     p5e.fill(this.color);
     p5e.noStroke();
     p5e.translate(this.position.x, this.position.y);
     p5e.rotate(this.rotation);
     p5e.rect(-this.length/2, -this.width/2, this.length, this.width);
-    p5e.rotate(-this.rotation);
-    p5e.translate(-this.position.x, -this.position.y);
+    p5e.pop(); // Restore draw state
   }
   
   ai_up(){
@@ -73,10 +73,11 @@ class Wall{
   }
   
   draw(){
+    p5e.push(); // Save draw state
     p5e.stroke(this.color);
     p5e.translate(this.start.x, this.start.y); //sub in constructor is because of this
     p5e.line(0,0,this.end.x, this.end.y);
-    p5e.translate(-this.start.x, -this.start.y);
+    p5e.pop(); // Restore draw state
   }
 }
 
@@ -97,16 +98,16 @@ class Game{
     this.delta = p5e.millis() - this.delta;
     this.digicar.update(this.delta);
     this.wall.update(this.delta);
-    if(p5e.keyIsDown(65)){
+    if(p5e.keyIsDown(65)){ // "A"
       this.digicar.ai_left();
     }
-    if(p5e.keyIsDown(68)){
+    if(p5e.keyIsDown(68)){ // "D"
       this.digicar.ai_right();
     }
-    if(p5e.keyIsDown(87)){
+    if(p5e.keyIsDown(87)){ // "W"
       this.digicar.ai_up();
     }
-    if(p5e.keyIsDown(83)){
+    if(p5e.keyIsDown(83)){ // "S"
       this.digicar.ai_down();
     }
   }
